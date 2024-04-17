@@ -1,0 +1,115 @@
+{
+    "title": {
+        "media": {
+            "url": "",
+            "caption": "<a target=\"_blank\" href=''>credits</a>",
+            "credit": ""
+        },
+        "text": {
+            "headline": "计算机发展史时间线",
+            "text": "<p>一个用于展示计算机发展历史的交互式时间线</p>"
+        }
+    },
+    "events": [
+        {
+            "media": {
+                "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Abacus_view.jpg/220px-Abacus_view.jpg",
+                "caption": "算盘 (<a target=\"_blank\" href='https://commons.wikimedia.org/wiki/File:Abacus_view.jpg'>credits</a>)"
+            },
+            "start_date": {
+                "year": "-2500"
+            },
+            "text": {
+                "headline": "算盘被发明",
+                "text": "<p>算盘是最早的计算设备,用于辅助加减运算和存储计算结果,发明于美索不达米亚。</p>"
+            }
+        },
+        {
+            "media": {
+                "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Step_reckoner.jpg/220px-Step_reckoner.jpg",
+                "caption": "步进计算器 (<a target=\"_blank\" href='https://commons.wikimedia.org/wiki/File:Step_reckoner.jpg'>credits</a>)"
+            },
+            "start_date": {
+                "year": "1694"
+            },
+            "text": {
+                "headline": "步进计算器发明",
+                "text": "<p>可进行加减乘除四则运算的最早机械式计算设备,由戈特弗里德·莱布尼茨发明。</p>"
+            }
+        },
+        {
+            "start_date": {
+                "year": "1822"
+            },
+            "text": {
+                "headline": "差分机和分析机设计",
+                "text": "<p>查尔斯·巴比奇提出差分机和分析机的设计理念,分析机被认为是第一台通用计算机的设计构想。</p>"
+            }
+        },
+        {
+            "media": {
+                "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Colossus.jpg/220px-Colossus.jpg",
+                "caption": "科洛苏斯 (<a target=\"_blank\" href='https://commons.wikimedia.org/wiki/File:Colossus.jpg'>credits</a>)"
+            },
+            "start_date": {
+                "year": "1943"
+            },
+            "text": {
+                "headline": "科洛苏斯投入使用",
+                "text": "<p>世界上第一台电子计算机'科洛苏斯'投入使用,使用真空管代替机械式继电器,大幅提高了计算速度。</p>"
+            }
+        },
+        {
+            "media": {
+                "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/EniacConstruction.jpg/220px-EniacConstruction.jpg",
+                "caption": "ENIAC (<a target=\"_blank\" href='https://commons.wikimedia.org/wiki/File:EniacConstruction.jpg'>credits</a>)"
+            },
+            "start_date": {
+                "year": "1946"
+            },
+            "text": {
+                "headline": "ENIAC电子计算机问世",
+                "text": "<p>被认为是第一台真正的通用电子计算机ENIAC问世,由约翰·莫克利和J·普雷斯伯·埃克特在宾夕法尼亚大学完成。</p>"
+            }
+        },
+        {
+            "media": {
+                "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Transistor_obj_3.png/220px-Transistor_obj_3.png",
+                "caption": "晶体管 (<a target=\"_blank\" href='https://commons.wikimedia.org/wiki/File:Transistor_obj_3.png'>credits</a>)"
+            },
+            "start_date": {
+                "year": "1947"
+            },
+            "text": {
+                "headline": "晶体管发明",
+                "text": "<p>贝尔实验室的约翰·芭丹、沃尔特·布拉顿和威廉·肖克利发明了晶体管,开启了现代计算机时代。</p>"
+            }
+        },
+        {
+            "media": {
+                "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/IBM_608_with_control_panel_open.jpg/220px-IBM_608_with_control_panel_open.jpg",
+                "caption": "IBM 608 (<a target=\"_blank\" href='https://commons.wikimedia.org/wiki/File:IBM_608_with_control_panel_open.jpg'>credits</a>)"
+            },
+            "start_date": {
+                "year": "1957"
+            },
+            "text": {
+                "headline": "IBM 608问世",
+                "text": "<p>IBM推出第一台全晶体管商用计算机IBM 608。</p>"
+            }
+        },
+        {
+            "media": {
+                "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Intel_4004.jpg/220px-Intel_4004.jpg",
+                "caption": "Intel 4004 (<a target=\"_blank\" href='https://commons.wikimedia.org/wiki/File:Intel_4004.jpg'>credits</a>)"
+            },
+            "start_date": {
+                "year": "1971"
+            },
+            "text": {
+                "headline": "第一款微处理器面世",
+                "text": "<p>第一款微处理器Intel 4004面世,由英特尔公司推出,推动了个人电脑的发展。</p>"
+            }
+        }
+    ]
+}
