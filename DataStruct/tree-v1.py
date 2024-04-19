@@ -1,34 +1,16 @@
 import streamlit as st
 from graphviz import Digraph
 import time
+import sys
+import os
+sys.path.append(os.path.dirname(__file__))
+from components.base import Node
+
 log_ = 1
-class Node:
-    def __init__(self, value,color=None):
-        self.value = value
-        self.color = color
-        self.left : Node=None
-        self.right : Node=None
         
+def build_tree(tree:Node):
+    pass
 
-def visualize_tree(root):
-    dot = Digraph()
-
-    def add_nodes_edges(node, parent=None):
-        if node is None:
-            return
-        node_attributes = {"label": str(node.value)}
-        if node.color:
-            node_attributes["color"] = node.color
-            node_attributes["style"] = "filled"
-        dot.node(str(node.value),**node_attributes)
-        # print(node.value)
-        if parent is not None:
-            dot.edge(str(parent.value), str(node.value))
-        add_nodes_edges(node = node.left, parent=node)
-        add_nodes_edges(node = node.right, parent=node)
-
-    add_nodes_edges(root)
-    return dot
 def cut_pre_travel(root:Node, sign):
     if sign[0] == 0:
         return 
@@ -112,38 +94,6 @@ def main():
     # Visualize the binary tree
     tree_viz = visualize_tree(st.session_state['tree'])
     st.graphviz_chart(tree_viz.source)
-    # ccol1,ccol2,ccol3 = st.sidebar.columns(3)
-    # st.write("\n")
-    # st.write("\n")
-    # st.write("\n")
-    # st.write("\n")
-    # st.write("\n")
-
-    # with ccol1:
-    #     st.write(" ")
-    #     st.write(" ")
-    #     st.write(" ")
-    #     st.write(" ")
-
-    #     if st.button("hello",key="button1"):
-    #         pass
-    # with ccol2:
-    #     st.write(" ")
-    #     st.write(" ")
-    #     st.write(" ")
-    #     st.write(" ")
-
-    #     if st.button("hello",key="button2"):
-    #         pass
-    # with ccol3:
-    #     st.write(" ")
-    #     st.write(" ")
-    #     st.write(" ")
-    #     st.write(" ")
-    
-    #     if st.button("hello",key="button3"):
-    #         pass
-
     col1,col2,col3 = st.sidebar.columns(3)
     with col1:
         if st.button("前序遍历") or st.session_state["log"][0]:
