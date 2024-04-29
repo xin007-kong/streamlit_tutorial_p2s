@@ -14,4 +14,6 @@
 
 ### 树的三种遍历方式
 ![文件tree-v1.py](./image/tree-v1.png)
-![文件tree-v2.py](./video/streamlit-tree.mp4)
+<video width="320" height="240" controls>
+  <source src="./video/streamlit-tree.mp4" type="video/mp4">
+</video>
