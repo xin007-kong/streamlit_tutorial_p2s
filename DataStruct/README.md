@@ -14,4 +14,4 @@
 
 ### 树的三种遍历方式
 ![文件tree-v1.py](./image/tree-v1.png)
-[![文件tree-v2.py](./video/streamlit-tree.mp4)](https://github.com/xin007-kong/streamlit_tutorial_p2s/blob/St_DataStructure_CW/DataStruct/video/streamlit-tree.mp4)
+

@@ -1,7 +1,7 @@
 import os,sys
 sys.path.append(os.path.dirname(__file__))
 import streamlit as st
-from typing import Dict , List
+from typing import Dict , List,Union
 class Node:
     def __init__(self, value,color=None,parent=None):
         self.value = value
@@ -98,9 +98,9 @@ class Tree:
             # print(f"{root.value}已变色")
             return root.value
 class Graph:
-    def __init__(self):
-        self.node:List[str] = []
-        self.edge: Dict[str, List[str]] = {}
+    def __init__(self,node:List[str]=[],edge: Dict[str,List[str]]={}):
+        self.node:List[str] = node
+        self.edge: Dict[str, List[str]] = edge
         self.width:List[int] = []
         self.depth:List[int] = []
         self.topology:List[int] = []
@@ -149,7 +149,7 @@ class Graph:
                         queue.enqueue(n)
                     break
             num-=1
-        print(self.width)
+        print("width:",self.width)
     def get_queue(self,nodd:str):
         num = len(self.node)
         w = [0]*num
@@ -174,11 +174,119 @@ class Graph:
             num-=1
     def depth_first_travel(self):
         # stack 实现
-        pass
-    def topology_sort(self):
-        # queue 实现
-        pass
-
+        num = len(self.node)
+        stack = Stack()
+        self.depth = [0]*num
+        if num != 0:
+            stack.push(self.node[0])
+        else:
+            return
+        index = 1
+        while num > 0:
+            dot = stack.pop()
+            if self.depth[self.node.index(dot)] == 0:
+                self.depth[self.node.index(dot)] = index
+                index += 1
+            for k in self.edge:
+                if k == dot:
+                    new_list = self.edge[k].copy()
+                    new_list.reverse()
+                    stack.push(new_list)
+            num -= 1
+        print("depth:",self.depth)
+    def get_stack(self,nod:str):
+        num = len(self.node)
+        stack = Stack()
+        w = [0]*num
+        if num != 0:
+            stack.push(self.node[0])
+        else:
+            return
+        index = 1
+        while num > 0:
+            dot = stack.pop()
+            if w[self.node.index(dot)] == 0:
+                w[self.node.index(dot)] = index
+                index += 1
+            for k in self.edge:
+                if k == dot:
+                    new_list = self.edge[k].copy()
+                    new_list.reverse()
+                    stack.push(new_list)
+            num -= 1
+            if dot == nod:
+                return stack
+    def topology_sort(self,node_index:int):
+        """
+        param node_index  the number of node that be deleted 
+        """
+        # queue 实现,拓扑排序实现有向无环图的排序过程，注重的是先后顺序，可能得到的结果不唯一
+        node = self.node.copy()
+        isNext = [0]*len(node)
+        edge = self.edge.copy()
+        queue = Queue()
+        num = len(self.node)
+        result:List[str] = []
+        for k in edge:
+            if edge[k]:
+                for v in edge[k]:
+                    isNext[node.index(v)] += 1
+        # 验证有向无环图
+        print("start")
+        if self.isDirectedAcyclicGraph():
+            # print("有向无环图")
+            node_num = 0
+            while num> 0:
+                for index,n in enumerate(isNext):
+                    if n == 0:
+                        queue.enqueue(node[index])
+                        isNext[index] = -1
+                print(queue.queue)
+                nod = queue.dequeue()
+                result.append(nod)
+                if nod in self.edge:
+                    for v in self.edge[nod]:
+                        isNext[node.index(v)] -= 1
+                
+                    del edge[nod]
+                    print(f"del {nod}的边")
+                print(f"del 点{nod}")
+                isNext.pop(node.index(nod))
+                node.remove(nod)
+                node_num += 1
+                if node_num == node_index:
+                    return node,edge,result
+                num -= 1
+        else:
+            return None,None,None
+        
+    def isDirectedAcyclicGraph(self):
+        path = []
+        num = len(self.node)
+        stack = Stack()
+        self.depth = [0]*num
+        if num != 0:
+            stack.push(self.node[0])
+            path.append(self.node[0])
+        else:
+            return
+        index = 1
+        while num > 0:
+            dot = stack.pop()
+            if self.depth[self.node.index(dot)] == 0:
+                self.depth[self.node.index(dot)] = index
+                index += 1
+            for k in self.edge:
+                if k == dot:
+                    new_list = self.edge[k].copy()
+                    new_list.reverse()
+                    stack.push(new_list)
+                    for n in new_list:
+                        if n in path:
+                            return False
+                    path.append(new_list)
+            num -= 1
+        return True
 class Queue:
     def __init__(self) -> None:
         self.queue:List[str] = []
@@ -191,7 +299,7 @@ class Queue:
             text = self.queue[0]
             self.queue.remove(text)
             return text
-        return "!<0>!"
+        return None
         
 class Stack:
     def __init__(self) -> None:
@@ -203,7 +311,12 @@ class Stack:
             self.stack.remove(text)
             return text
     
-    def push(self,text:str):
-        self.stack.append(text)
+    def push(self,text:Union[str,List[str]]):
+        if isinstance(text,str):
+            self.stack.append(text)
+        else:
+            if text:
+                for v in text:
+                    self.stack.append(v)
 
     

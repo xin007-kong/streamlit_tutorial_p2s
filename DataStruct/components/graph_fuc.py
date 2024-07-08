@@ -11,7 +11,7 @@ def visualize_graph(graph: Graph,lis:List[int] = None,num:int = None):
     nod = ""
     dot = Digraph()
     for index in range(len(graph.node)):
-        print(index, lis)
+        # print(index, lis)
         if lis and num:
             if lis[index] <= num:
                 if lis[index] == num:

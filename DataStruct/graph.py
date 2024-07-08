@@ -78,14 +78,23 @@ if __name__ == "__main__":
         st.markdown("# 遍历图")
         if st.session_state.width >= 1:
             st.session_state.width -= 1
+        if st.session_state.depth >= 1:
+            st.session_state.depth -= 1
+        if st.session_state.topology >= 1:
+            st.session_state.topology -= 1
         if st.button("广度优先遍历"):
             st.session_state.graph.width_first_travel()
             st.session_state.width = len(st.session_state.graph.node)
 
-        if st.button("深度优先遍历") or st.session_state.depth > 1:
-            print("hello")
-        if st.button("拓扑排序") or st.session_state.topology > 1:
-            print("hello")
+        if st.button("深度优先遍历"):
+            st.session_state.graph.depth_first_travel()
+            st.session_state.depth = len(st.session_state.graph.node)
+
+        if st.button("拓扑排序") or st.session_state.topology >= 1:
+
+            if st.session_state.topology == 0:
+                st.session_state.topology = len(st.session_state.graph.node)
+            node,edge,result = st.session_state.graph.topology_sort(len(st.session_state.graph.node)-st.session_state.topology+1)
 
 
 
@@ -111,16 +120,38 @@ if __name__ == "__main__":
         time.sleep(2)
         st.rerun()
     elif st.session_state.depth >= 1:
-        dot, nod = visualize_graph(st.session_state.graph,st.session_state.graph.depth,len(st.session_state.graph.node)-st.session_state.depth)
+        dot, nod = visualize_graph(st.session_state.graph,st.session_state.graph.depth,len(st.session_state.graph.node)-st.session_state.depth + 1)
         st.graphviz_chart(dot.source)
-        
+        st.text("深度优先遍历就是利用栈，从起点开始，将接下来的节点全部依次压入栈中，然后弹出来一个，将接下来的节点依次压入栈中，循环进行")
+        col1,col2 = st.columns([1,10])
         with col1:
-            st.text("1")
+            st.text("出栈元素")
+            # print("nodddd",nod)
+            st.text(str(nod))
         with col2:
-            st.text("123")
+            st.text("栈内元素")
+            if n := st.session_state.graph.get_stack(nod).stack:
+                if n:
+                    n.reverse()
+                    text = ""
+                    for a in n:
+                        text += str(a) + " " 
+                    st.text(text)
+                else:
+                    st.text(" ")
+        time.sleep(2)
+        st.rerun()
     elif st.session_state.topology >= 1:
-
-        st.graphviz_chart(visualize_graph(st.session_state.graph,st.session_state.graph.topology,len(st.session_state.graph.node)-st.session_state.topology).source)
+        dot, nod = visualize_graph(graph=Graph(node,edge))
+        st.graphviz_chart(dot.source)
+        st.text("拓扑排序就是给有向无环图进行排序，遍历并删除入度为0的点，重复进行，体现的整个图的先后顺序")
+        st.markdown("# 排序结果")
+        text = ""
+        for i in result:
+            text += str(i) + " "
+        st.text(text)
+        time.sleep(2)
+        st.rerun()
     else:
         dot, node = visualize_graph(st.session_state.graph)
         st.graphviz_chart(dot.source)
