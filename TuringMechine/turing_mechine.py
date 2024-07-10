@@ -1,60 +1,90 @@
 import streamlit as st
-
-def simulate_turing_machine(tape, head_pos, state, rules, step=1):
-    """
-    模拟图灵机的一步运行。
+import time
+def findIndex(a:str) -> int:
+    sign = False
+    for index,i in enumerate(a):
+        if sign and i == "#":
+            return index
+        if ord(i)>=48 and ord(i)<= 57:
+            sign = True
     
-    :param tape: 纸带内容，列表形式，包含'0'、'1'和其他符号。
-    :param head_pos: 读写头的当前位置。
-    :param state: 图灵机的当前状态。
-    :param rules: 转移规则，字典形式，例如{('A', '0'): ('B', '1', -1), ...}。
-    :param step: 运行的步数。
-    :return: 更新后的纸带内容、读写头位置和状态。
-    """
-    for _ in range(step):
-        current_symbol = tape[head_pos]
-        next_state, new_symbol, move = rules.get((state, current_symbol), (None, None, None))
-        if next_state is not None:
-            tape[head_pos] = new_symbol
-            if move == -1:
-                head_pos -= 1
-            elif move == 1:
-                head_pos += 1
-            state = next_state
+def transforme(state:str,t:str):
+    next_state = ""
+    next_text = ""
+    next_step = 0
+    if state == "<":
+        if t == "1":
+            next_text = "0"
+            next_state = "<"
+            next_step = -1
+        if t == "0" or t == "#":
+            next_text = "1"
+            next_state = ">"
+            next_step = 1
+    if state == ">":
+        next_step = 1
+        next_text = t
+        next_state = state
+        if t == "#":
+            next_state = "h"
+            next_step = 0
+    return next_state,next_text,next_step
+if "state" not in st.session_state:
+    st.session_state.state = "h"
+if "text" not in st.session_state:
+    st.session_state.text = "###1010110####"
+if "last_index" not in st.session_state:
+    st.session_state.last_index = findIndex(st.session_state.text)
+if "start" not in st.session_state:
+    st.session_state.start = False
+st.markdown("# Turing Mechine Visualization")
+st.markdown("### 以二进制加法举例")
+
+col = st.columns(len(st.session_state.text))
+
+color = ""
+for i in range(len(col)):
+    with col[i]:
+        if st.session_state.text[i] == "#":
+            color = "#00662F"
         else:
-            break  # 没有规则匹配，停止模拟
+            color = "#00b07f"
+        st.markdown(f"""
+        <div style='width: 30px; height: 30px; background-color: {color};display: flex; justify-content: center; align-items: center;'>{st.session_state.text[i]}</div>
+        """, unsafe_allow_html=True)
+print(len(col),st.session_state.last_index)
+with col[st.session_state.last_index]:
+    st.markdown(f"""
+        <div style='width: 30px; height: 30px; display: flex; justify-content: center; align-items: center;'>↑</div>
+        """, unsafe_allow_html=True)
+with col[st.session_state.last_index]:
+    st.markdown(f"""
+        <div style='width: 30px; height: 30px; background-color: {color};display: flex; justify-content: center; align-items: center;'>{st.session_state.state}</div>
+        """, unsafe_allow_html=True)
 
-    return tape, head_pos, state
-
-def main():
-    st.title('图灵机模拟')
-
-    # 图灵机的初始状态
-    tape = [None] * 10  # 纸带，None表示空白
-    tape[0] = '1'       # 初始内容为...0001000...
-    head_pos = 0        # 读写头初始位置
-    state = 'A'         # 初始状态
-
-    # 转移规则示例
-    rules = {
-        ('A', '1'): ('B', '0', 1),
-        ('B', '0'): ('A', '1', -1),
-    }
-
-    # 模拟按钮
-    step = st.sidebar.slider('步数', 1, 10, 1)
-    if st.sidebar.button('运行'):
-        tape, head_pos, state = simulate_turing_machine(tape, head_pos, state, rules, step)
-
-    # 展示纸带和读写头位置
-    st.subheader('纸带内容')
-    st.write(tape)
-    st.subheader('读写头位置')
-    st.write(head_pos)
-
-    # 展示当前状态
-    st.subheader('当前状态')
-    st.write(state)
-
-if __name__ == '__main__':
-    main()
+col1,col2 = st.columns(2)
+with col1:
+    if st.button("start"):
+        st.session_state.last_index -= 1
+        st.session_state.start = True
+        st.session_state.state = "<"
+        st.rerun()
+with col2:
+    if st.button("reset"):
+        st.session_state.last_index = findIndex(st.session_state.text)
+        st.session_state.text = "###1010110####"
+        st.session_state.start = False
+        st.rerun()
+if st.session_state.start:
+    st.session_state.state,text,step = transforme(st.session_state.state,st.session_state.text[st.session_state.last_index])
+    if step == 0:
+        st.session_state.start = False
+        st.rerun()
+    st.session_state.text = st.session_state.text[:st.session_state.last_index] + text + st.session_state.text[st.session_state.last_index + 1:] 
+    st.session_state.last_index += step
+    time.sleep(2)
+    st.rerun()
+# with col[1]:
+#     st.markdown("""
+#     <div style='width: 30px; height: 30px; background-color: blue;display: flex; justify-content: center; align-items: center;'>2</div>
+#     """, unsafe_allow_html=True)
