@@ -106,7 +106,7 @@ if __name__ == "__main__":
         with col1:
             st.text("出队元素")
             print("nodddd",nod)
-            st.text(str(nod))
+            st.markdown(f"<span style='color: red;'>{int(nod)}</span>",unsafe_allow_html=True)
         with col2:
             st.text("队列元素")
             if n := st.session_state.graph.get_queue(nod).queue:
@@ -114,7 +114,7 @@ if __name__ == "__main__":
                     text = ""
                     for a in n:
                         text += str(a) + " " 
-                    st.text(text)
+                    st.markdown(f"`{text}`")
                 else:
                     st.text(" ")
         time.sleep(2)
@@ -127,7 +127,8 @@ if __name__ == "__main__":
         with col1:
             st.text("出栈元素")
             # print("nodddd",nod)
-            st.text(str(nod))
+            # st.text(str(nod))
+            st.markdown(f"<span style='color: red;'>{int(nod)}</span>",unsafe_allow_html=True)
         with col2:
             st.text("栈内元素")
             if n := st.session_state.graph.get_stack(nod).stack:
@@ -136,7 +137,8 @@ if __name__ == "__main__":
                     text = ""
                     for a in n:
                         text += str(a) + " " 
-                    st.text(text)
+                    # st.text(text)
+                    st.markdown(f"`{text}`")
                 else:
                     st.text(" ")
         time.sleep(2)
@@ -149,12 +151,14 @@ if __name__ == "__main__":
         text = ""
         for i in result:
             text += str(i) + " "
-        st.text(text)
+        # st.text(text)
+        st.markdown(f"`{text}`")
+
         time.sleep(2)
         st.rerun()
     else:
         dot, node = visualize_graph(st.session_state.graph)
         st.graphviz_chart(dot.source)
-    if st.session_state.travel:
-        st.markdown("# 遍历结果")
-        st.text(str(a) + " " for a in st.session_state.travel)
+    # if st.session_state.travel:
+    #     st.markdown("# 遍历结果")
+    #     st.text(str(a) + " " for a in st.session_state.travel)
